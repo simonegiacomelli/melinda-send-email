@@ -29,11 +29,17 @@ func main() {
 
 	fmt.Println("Hostname:", host)
 	fmt.Println("Port:", port)
+	to := "simone.giacomelli@gmail.com"
+	msg := "From: " + user + "\n" +
+		"To: " + to + "\n" +
+		"Subject: Hello there\n\n" +
+		"This is a really unimaginative message, I know."
 
 	host_fqdn := host + ":" + strconv.Itoa(port)
-	message := []byte("This is a really unimaginative message, I know.")
+
 	auth := smtp.PlainAuth("", user, pass, host)
-	err = smtp.SendMail(host_fqdn, auth, user, []string{"simone.giacomelli@gmail.com"}, message)
+
+	err = smtp.SendMail(host_fqdn, auth, user, []string{to}, []byte(msg))
 	if err != nil {
 		fmt.Println(err)
 		return
